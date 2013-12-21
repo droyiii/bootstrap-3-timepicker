@@ -249,6 +249,22 @@
           break;
         }
         break;
+      case 186: // colon
+        e.preventDefault();
+        switch (this.highlightedUnit) {
+          case 'hour':
+            this.highlightNextUnit();
+            break;
+          case 'minute':
+            if (this.showSeconds)
+              this.highlightNextUnit();
+            else
+              this.highlightPrevUnit();
+            break;
+          case 'meridian':
+            this.highlightHour();
+            break;
+        }
       }
     },
 
