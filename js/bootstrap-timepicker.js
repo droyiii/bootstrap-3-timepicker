@@ -154,26 +154,42 @@
       this.update();
     },
 
-    elementKeydown: function(e) {
+    tabToNextUnit: function(shiftKey) {
+      if (shiftKey)
+        this.highlightPrevUnit();
+      else
+        this.highlightNextUnit();
+    },
+
+    elementKeydown: function (e) {
+      
       switch (e.keyCode) {
       case 9: //tab
         this.updateFromElementVal();
 
         switch (this.highlightedUnit) {
         case 'hour':
-          e.preventDefault();
-          this.highlightNextUnit();
+          if (!e.shiftKey) {
+            e.preventDefault();
+            this.tabToNextUnit(e.shiftKey);
+          }
           break;
         case 'minute':
           if (this.showMeridian || this.showSeconds) {
             e.preventDefault();
-            this.highlightNextUnit();
+            this.tabToNextUnit(e.shiftKey);
           }
           break;
         case 'second':
           if (this.showMeridian) {
             e.preventDefault();
-            this.highlightNextUnit();
+            this.tabToNextUnit(e.shiftKey);
+          }
+          break;
+        case 'meridian':
+          if (e.shiftKey) {
+            e.preventDefault();
+            this.tabToNextUnit(e.shiftKey);
           }
           break;
         }
